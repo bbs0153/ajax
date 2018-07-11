@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+#tb2 {
+	position: fixed;
+	width: 400px;
+	height: 800px;
+	top: 5px;
+	left:850px;
+	text-align: center;
+}
+</style>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+
+		$.ajax("listGoods.jsp", {
+
+			success : function(data) {
+
+				var list = eval("(" + data + ")");
+
+				$.each(list, function(i, g) {
+					var tr = $("<tr></tr>");
+
+					$.each(g, function(j, v) {
+						var td = $("<td></td>");
+
+						if (j == 'fname') {
+
+							$(td).append($("<img/>").attr({
+
+								src : "img/" + v,
+								width : "50px",
+								height : "50px"
+
+							}));
+
+						} else {
+
+							$(td).html(v);
+						}
+
+						$(tr).append(td);
+					});
+					
+					$("#tb").append(tr);
+					
+
+					$(tr).mouseover(function() {
+						
+						$("#tb2").empty();
+
+						var img = $(this).find("img").clone().attr({
+							
+							width:"300px",
+							height: "300px"
+
+						});
+						
+						 var br = $("<br>");
+						 
+						$("#tb2").append(img,br);
+						$("#tb2").append("상품번호"+g.no+"&nbsp;&nbsp;&nbsp;");
+						$("#tb2").append("상품명"+g.item+"&nbsp;&nbsp;&nbsp;");
+						$("#tb2").append("가격"+g.price+"&nbsp;&nbsp;&nbsp;");
+						$("#tb2").append("수량"+g.qty+"&nbsp;&nbsp;&nbsp;");
+						 
+					});
+
+				});
+			}
+
+		});
+
+	});
+</script>
+</head>
+<body>
+	<table width="100%">
+		<tr>
+			<td width="50%">
+				<table border="1" width="100%" id="tb">
+					<tr>
+						<td>상품번호</td>
+						<td>상품명</td>
+						<td>가격</td>
+						<td>수량</td>
+						<td>이미지</td>
+					</tr>
+				</table>
+			</td>
+
+			<td>
+				<div id="tb2"></div>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+<style type="text/css">
+#F{
+
+margin: 0 auto;
+width: 250px;
+
+}
+
+.input{
+
+}
+
+</style>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+
+		var inputArr = $("input");
+
+		var loadMember = function() {
+			$("#tb").empty();
+			$.ajax({
+				url : "ListMember",
+				success : function(data) {
+					var arr = eval("(" + data + ")");
+
+					$.each(arr, function(i, d) {
+						var tr = $("<tr></tr>");
+
+						$.each(d, function(j, v) {
+							var td = $("<td></td>").html(v);
+							$(tr).append(td);
+						});
+						$("#tb").append(tr);
+
+						$(tr).click(function() {
+
+							var tds = $(this).find("td");
+							$.each(inputArr, function(i, input) {
+								$(inputArr[i]).val($(tds[i]).html());
+							});
+
+						});
+
+					});
+				}
+			});
+		}
+
+		loadMember();
+
+		$("#btnAdd").click(function() {
+			data = $("#F").serializeArray();
+			$.ajax({
+				url : "UpdateMember?cmd=1",
+				data : data,
+				success : function(data) {
+					var re = eval("(" + data + ")");
+					if (re.result == "1") {
+						loadMember();
+					} else {
+						alert("추가에 실패했습니다.");
+					}
+				}
+			});
+
+		});
+
+		$("#btnUpdate").click(function() {
+			data = $("#F").serializeArray();
+			$.ajax({
+				url : "UpdateMember?cmd=2",
+				data : data,
+				success : function(data) {
+					var re = eval("(" + data + ")");
+					if (re.result == "1") {
+						loadMember();
+					} else {
+						alert("수정에 실패했습니다.");
+					}
+
+				}
+			});
+
+		});
+
+		$("#btnDelete").click(function() {
+			data = $("#F").serializeArray();
+			$.ajax({
+				url : "UpdateMember?cmd=3",
+				data : data,
+				success : function(data) {
+					var re = eval("(" + data + ")");
+					if (re.result == "1") {
+						loadMember();
+					} else {
+						alert("삭제에 실패했습니다.");
+					}
+				}
+			});
+
+		});
+
+	});
+</script>
+</head>
+<body>
+	<form id="F">
+	      아이디 : <input type="text" name="id" id="id" class="input"><br> 
+		이름 : <input type="text" name="name" id="name" class="input"><br> 
+		나이 : <input type="text" name="age" id="age" class="input"><br> 
+		주소 : <input type="text" name="addr" id="addr" class="input"><br>
+	</form>
+	<button id="btnAdd">등록</button>
+	<button id="btnUpdate">수정</button>
+	<button id="btnDelete">삭제</button>
+	<div class="container">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>아이디</th>
+					<th>이름</th>
+					<th>나이</th>
+					<th>주소</th>
+				</tr>
+			</thead>
+			<tbody id="tb"></tbody>
+		</table>
+	</div>
+</body>
+</html>

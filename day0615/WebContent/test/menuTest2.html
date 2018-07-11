@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+.menu {
+	width: 120px;
+	position: absolute;
+
+}
+
+.selectMenu {
+	color: blue;
+}
+
+li {
+	list-style: none;
+}
+
+.sub {
+	position: absolute;
+	width: 200px;
+	border: 1px solid pink;
+}
+</style>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var menu = [ "About Us", "Business Area", "Academy", "News", "Blog",
+				"Contact" ];
+		
+		var submenu = [
+			["인사말","비전&추진목표","조직도","기부금","오시는길"],
+			["유소년 축구인재 양성","대안학교 운영사업","꿈나무 장학사업","스포츠지도사 양성사업","유소년 국제교류 활성화 사업","축구 저변 확대 사업","손흥민 체육공원 조성사업"],  
+			["입학안내","교육내용","감독/코치","선수소개","해외진출 선수"],
+			["공지사항","자주묻는 질문","언론보도"],
+			["동영상"],
+		 	];		
+		var submenuLink = [
+			["ex01.html","ex01.html","ex01.html","ex01.html","ex01.html"],
+			["ex01.html","ex01.html","ex01.html","ex01.html","ex01.html","ex01.html","ex01.html"],  
+			["ex01.html","ex01.html","ex01.html","ex01.html","ex01.html"],
+			["ex01.html","ex01.html","ex01.html"],
+			["ex01.html"],
+		 	];
+	$.each(submenu, function(i, m) {
+			var ul = $("<ul></ul>");
+			$(ul).attr("idx",i);
+			$(ul).addClass("sub")
+			$.each(m, function(j, s) {
+
+				var li = $("<li></li>");
+				var a = $("<a></a>").html(s);
+				
+				$(a).attr("href",submenuLink[i][j]);
+				$(li).append(a);
+				$(ul).append(li);
+
+			});
+
+			$("#submenu").append(ul);
+		});
+	
+	$(".sub").css({
+		left:-3000
+	}).hide();
+
+		$.each(menu, function(i, m) {
+
+			var span = $("<span></span>").html(m);
+			$(span).css({left:i*200});
+			$(span).attr("idx",i);
+			$(span).addClass("menu");
+			$("#menu").append(span);
+
+			$(span).hover(function() {
+				var left = $(this).css("left");
+				$(this).addClass("selectMenu");
+				var idx = $(this).attr("idx");
+				$(".sub[idx="+idx+"]").show().css({left:left});
+				$(".sub[idx!="+idx+"]").hide().css({left:-3000});
+				
+
+			}, function() {
+				$(this).removeClass("selectMenu");
+			});
+
+		});
+
+	});
+</script>
+</head>
+<body>
+	<div id="menu"></div>
+	<div id="submenu"></div>
+</body>
+</html>

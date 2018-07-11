@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+
+		$.ajax("listStudent.jsp", {
+
+			success : function(data) {
+
+				var a = eval("(" + data + ")");
+				
+				
+				$.each(a, function(i, s) {
+			
+					var tot = eval(s.kor)+eval(s.eng)+eval(s.math);
+					var avg = tot/3;
+					
+					var tr = $("<tr></tr>");
+					var td1 = $("<td></td>").html(s.no);
+					var td2 = $("<td></td>").html(s.name);
+					var td3 = $("<td></td>").html(s.kor);
+					var td4 = $("<td></td>").html(s.eng);
+					var td5 = $("<td></td>").html(s.math);
+					var td6 = $("<td></td>").html(tot);
+					var td7 = $("<td></td>").html(avg);
+
+					$(tr).append(td1, td2, td3, td4, td5, td6, td7);
+					$("#tb").append(tr);
+
+				});
+			}
+		});
+
+	});
+</script>
+</head>
+<body>
+	<table border="1" width="60%" id="tb">
+		<tr>
+			<td>번호</td>
+			<td>이름</td>
+			<td>국어</td>
+			<td>영어</td>
+			<td>수학</td>
+			<td>총점</td>
+			<td>평균</td>
+		</tr>
+	</table>
+</body>
+</html>

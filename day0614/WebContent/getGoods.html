@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="Stylesheet" href="js\jquery-ui.min.css">
+<style type="text/css">
+table {
+	left : 1600px;
+	position: relative;
+}
+</style>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js\jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$("#btnOk").click(function() {
+
+			$.ajax("listGoods.jsp?a=4", {
+
+				success : function(data) {
+
+					var a = eval("(" + data + ")");
+
+					
+					$.each(a, function(i, g) {
+						var tr = $("<tr></tr>");
+						var td1 = $("<td></td>").html(g.no);
+						var td2 = $("<td></td>").html(g.item);
+						var td3 = $("<td></td>").html(g.price);
+						var td4 = $("<td></td>").html(g.qty);
+						
+						var img = $("<img/>").attr({
+
+							src : "img/"+g.fname,
+							width : 100,
+							height : 100
+							
+						});
+						
+						var td5 = $("<td></td>").html(img);
+
+						$(tr).append(td1, td2, td3, td4, td5);
+
+						$("#tb").append(tr);
+						
+
+					});
+				}
+			});
+			$("#tb").animate({
+				left:0
+			}, 5000,"easeOutElastic");
+		});
+	});
+</script>
+</head>
+<body>
+	<h2>상품목록</h2>
+	<table border="1" width="60%" id="tb">
+		<tr>
+			<td>상품번호</td>
+			<td>상품명</td>
+			<td>가격</td>
+			<td>수량</td>
+			<td>이미지</td>
+		</tr>
+	</table>
+	<button id="btnOk">상품목록 읽어오기</button>
+</body>
+</html>

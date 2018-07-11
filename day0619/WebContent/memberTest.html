@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+	$(function() {
+
+		$("#btnAdd").click(function() {
+
+			var id = $("#id").val();
+			var name = $("#name").val();
+			var age = $("#age").val();
+			var addr = $("#addr").val();
+
+			var data = {
+				id : id,
+				name : name,
+				age : age,
+				addr : addr
+			};
+
+			$.ajax({
+				url : "insertMember.jsp",
+				data : data,
+				success : function(data) {
+					var r = eval("(" + data + ")");
+					if (r.result == "1") {
+						loadMember();
+					} else {
+						alert("추가에 실패했습니다");
+					}
+				}
+			});
+
+		});
+
+		var loadMember = function() {
+			$.getJSON("listMember.jsp", function(data) {
+				$.each(data, function(i, m) {
+					var tr = $("<tr></tr>");
+					$.each(m, function(j, v) {
+						$("<td></td>").html(v).appendTo(tr);
+					});
+					$("#tb").append(tr);
+				});
+			});
+		}
+
+		loadMember();
+
+	});
+</script>
+</head>
+<body>
+	아이디 :<input type="text" name="id" id="id"><br> 
+	이름 :<input type="text" name="name" id="name"><br> 
+	나이 :<input type="text" name="age" id="age"><br>
+	주소 :<input type="text" name="addr" id="addr"><br>
+	<button id="btnAdd">등록</button>
+
+	<table>
+		<thead>
+			<tr>
+				<td>아이디</td>
+				<td>이름</td>
+				<td>나이</td>
+				<td>주소</td>
+			</tr>
+		</thead>
+		<tbody id="tb"></tbody>
+	</table>
+</body>
+</html>

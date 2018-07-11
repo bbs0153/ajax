@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="Stylesheet" href="js\jquery-ui.min.css">
+<style type="text/css">
+table {
+	left : 1600px;
+	position: relative;
+}
+</style>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js\jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$("#btnOk").click(function() {
+
+			$.ajax("listDept.jsp?a=4", {
+
+				success : function(data) {
+
+					var a = eval("(" + data + ")");
+
+					$("#tb").html("<tr><td>부서번호</td><td>부서명</td><td>부서위치</td></tr>");
+					
+					$.each(a, function(i, d) {
+						var tr = $("<tr></tr>");
+						var td1 = $("<td></td>").html(d.dno);
+						var td2 = $("<td></td>").html(d.dname);
+						var td3 = $("<td></td>").html(d.dloc);
+
+						$(tr).append(td1, td2, td3);
+
+						$("#tb").append(tr);
+						
+
+					});
+				}
+			});
+			$("#tb").animate({
+				left:0
+			}, 5000,"easeOutElastic");
+		});
+	});
+</script>
+</head>
+<body>
+	<h2>부서목록</h2>
+	<table border="1" width="60%" id="tb">
+		<tr>
+			<td>부서번호</td>
+			<td>부서명</td>
+			<td>부서위치</td>
+		</tr>
+	</table>
+	<button id="btnOk">부서목록 읽어오기</button>
+</body>
+</html>

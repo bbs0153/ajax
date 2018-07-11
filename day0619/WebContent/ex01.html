@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="Stylesheet" href="js\jquery-ui.css">
+<style type="text/css">
+body {
+	font-size: 62.5%
+}
+
+h1 {
+	text-align: center;
+}
+
+input[type=text], label {
+	margin-bottom: 12px;
+	padding: .4em;
+	width: 95%
+}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js\jquery-ui.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#dialog").dialog({
+			
+			buttons:{
+				submit: function(){},
+				reset: function(){},
+				cancel: function(){}
+			},
+			modal: false
+			
+		});
+		$("#event_date").datepicker({
+			dateFormat: "yy년 mm월 dd일",
+			numberOfMonths: 3
+			
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="dialog" title="일정입력">
+		<h1>일정 등록</h1>
+		<label for="event_name">일정이름</label>
+		<input type="text" id="event_name">
+		<label for="event_date">날짜</label>
+		<input type="text" id="event_date">
+	</div>
+	지금 당신의 생각은?
+	<textarea rows="10" cols="60"></textarea>
+</body>
+</html>

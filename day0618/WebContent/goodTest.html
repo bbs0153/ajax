@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$.ajax({
+			url : "listGoods.jsp",
+			success : function(data) {
+				var g = eval("(" + data + ")");
+				var tr = $("<tr></tr>");
+				$.each(g, function(i, v) {
+					$("<td></td>").html(v).appendTo($(tr));
+				});
+				$("#goodList").append(tr);
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<h2>상품정보</h2>
+	<hr>
+	<table id="goodList">
+		<tr>
+			<td>상품번호</td>
+			<td>상품명</td>
+			<td>가격</td>
+			<td>수량</td>
+			<td>이미지</td>
+		</tr>
+	</table>
+</body>
+</html>
